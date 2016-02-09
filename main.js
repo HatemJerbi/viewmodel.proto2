@@ -8,16 +8,16 @@ if (Meteor.isClient) {
 		triggerRefreshed : 0,
 		add: function(){
 			console.log("add");
-			//this.triggerRefreshed.changed();
-			this.triggerRefreshed(this.triggerRefreshed()+1);
+			this.triggerRefreshed.changed();
+			//this.triggerRefreshed(this.triggerRefreshed()+1);
 		}
 	});
 
 	Template.person.viewmodel({
 		autorun : function(){
-			//this.triggerRefreshed.depend();
-			if (this.triggerRefreshed())
-				console.log("triggerRefreshed");
+			this.triggerRefreshed.depend();
+			//if (this.triggerRefreshed())
+			console.log("triggerRefreshed");
 		},
 		onRendered: function(){
 			console.log(this.firstName());
