@@ -1,18 +1,30 @@
 if (Meteor.isClient) {
-	Template.rate.viewmodel({
-		rate: 0,
-		starWidth: "18px",
-		readOnly: true,
-		precision: 3,
-		onRendered: function () {
-			this.rateyo.rateYo({
-				rating: this.rate(),
-				readOnly: this.readOnly(),
-				precision: this.precision(),
-				starWidth: this.starWidth()
-			});
+	ViewModel.mixins = {
+
+	};
+
+	Template.list.viewmodel({
+		peoples : [{_id:1, firstName:'test1'},{_id:2,firstName:'test2'}],
+		triggerRefreshed : 0,
+		add: function(){
+			console.log("add");
+			//this.triggerRefreshed.changed();
+			this.triggerRefreshed(this.triggerRefreshed()+1);
 		}
 	});
+
+	Template.person.viewmodel({
+		autorun : function(){
+			//this.triggerRefreshed.depend();
+			if (this.triggerRefreshed())
+				console.log("triggerRefreshed");
+		},
+		onRendered: function(){
+			console.log(this.firstName());
+		}
+	});
+
+
 }
 
 if (Meteor.isServer) {
